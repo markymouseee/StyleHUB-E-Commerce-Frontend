@@ -1,8 +1,9 @@
+import { NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card',
-  imports: [],
+  imports: [NgFor],
   standalone: true,
   templateUrl: './card.html',
   styleUrl: './card.css'

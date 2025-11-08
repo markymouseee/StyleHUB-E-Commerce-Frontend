@@ -31,7 +31,7 @@
                   d="M19.0983701,10.6382791 C15.230178,8.34118115 8.85003755,8.12986439 5.15729493,9.25058527 C4.56433588,9.43062856 3.93727638,9.09580812 3.75758647,8.50284907 C3.57789655,7.90953664 3.91236362,7.28283051 4.50585273,7.10261054 C8.74455585,5.81598127 15.7909802,6.06440214 20.2440037,8.70780512 C20.7774195,9.02442687 20.9525156,9.71332656 20.6362472,10.2456822 C20.3198021,10.779098 19.6305491,10.9549008 19.0983701,10.6382791 M18.971686,14.0407262 C18.7004726,14.4810283 18.1246521,14.6190203 17.6848801,14.3486903 C14.4600027,12.3664473 9.54264764,11.792217 5.72728477,12.9503953 C5.23256328,13.0998719 4.70992535,12.8208843 4.55974204,12.3270462 C4.41061884,11.8323247 4.68978312,11.3107469 5.18362118,11.1602103 C9.5419409,9.83771368 14.9600247,10.4782013 18.6638986,12.7544503 C19.1036707,13.0253103 19.242016,13.6013075 18.971686,14.0407262 M17.5034233,17.308185 C17.2876894,17.6617342 16.827245,17.7725165 16.4749326,17.5571359 C13.6571403,15.8347984 10.1101639,15.4459119 5.93312425,16.4000177 C5.53063298,16.4922479 5.12937851,16.2399399 5.03767834,15.8376253 C4.94544812,15.4351341 5.19669597,15.0338796 5.60024736,14.9420027 C10.1712973,13.8970803 14.0923186,14.3467468 17.2551791,16.2796943 C17.6078449,16.4948982 17.7189805,16.9556959 17.5034233,17.308185 M12,0 C5.37267547,0 0,5.37249879 0,11.9998233 C0,18.6278546 5.37267547,24 12,24 C18.6275012,24 24,18.6278546 24,11.9998233 C24,5.37249879 18.6275012,0 12,0" />
               </svg>
             </span>
-            Built with Spotify API
+
           </li>
 
         </ul>
@@ -47,25 +47,24 @@
         </p>
       </div>
 
-      <form #f="ngForm" (ngSubmit)="onLogin()" class="space-y-5">
+      <form #f="ngForm" (ngSubmit)="onRegister()" class="space-y-5">
+
         <div class="relative">
-          <input type="text" id="usernameOrEmail" [(ngModel)]="usernameOrEmail" name="usernameOrEmail"
-            (input)="clearError('username_or_email')"
+          <input type="text" id="name" [(ngModel)]="name" name="name" (input)="clearError('name')"
             class="block px-2.5 pb-2.5 pt-4 text-gray-900 dark:text-white w-full text-sm bg-transparent rounded-lg border-1 appearance-none focus:outline-none focus:ring-0 peer"
             [ngClass]="{
-              'border-red-300 dark:border-red-600  dark:focus:border-red-500 focus:border-red-600': errors.username_or_email,
-              'border-gray-300 dark:border-gray-600  dark:focus:border-blue-500 focus:border-blue-600': !errors.username_or_email
+              'border-red-300 dark:border-red-600  dark:focus:border-red-500 focus:border-red-600': errors.name,
+              'border-gray-300 dark:border-gray-600  dark:focus:border-blue-500 focus:border-blue-600': !errors.name
             }" placeholder=" " required />
-          <label for="usernameOrEmail"
+          <label for="name"
             class="absolute text-sm  duration-300  transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
             [ngClass]="{
-                'text-red-500 dark:text-red-400 peer-focus:text-red-600 peer-focus:dark:text-red-500': errors.username_or_email,
-                'text-gray-500 dark:text-gray-400 peer-focus:text-blue-600 peer-focus:dark:text-blue-500': !errors.username_or_email
-              }">Username
-            or email</label>
+                'text-red-500 dark:text-red-400 peer-focus:text-red-600 peer-focus:dark:text-red-500': errors.name,
+                'text-gray-500 dark:text-gray-400 peer-focus:text-blue-600 peer-focus:dark:text-blue-500': !errors.name
+              }">Fullname</label>
         </div>
 
-        <div *ngIf="errors.username_or_email"
+        <div *ngIf="errors.name"
           class="flex items-center text-xs text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
           role="alert">
           <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -75,23 +74,53 @@
           </svg>
           <span class="sr-only">Info</span>
           <div>
-            {{ errors.username_or_email[0] }}
+            {{ errors.name[0] }}
+          </div>
+        </div>
+
+
+        <div class="relative">
+          <input type="email" id="email" [(ngModel)]="email" name="email" (input)="clearError('username_or_email')"
+            class="block px-2.5 pb-2.5 pt-4 text-gray-900 dark:text-white w-full text-sm bg-transparent rounded-lg border-1 appearance-none focus:outline-none focus:ring-0 peer"
+            [ngClass]="{
+              'border-red-300 dark:border-red-600  dark:focus:border-red-500 focus:border-red-600': errors.email,
+              'border-gray-300 dark:border-gray-600  dark:focus:border-blue-500 focus:border-blue-600': !errors.email
+            }" placeholder=" " required />
+          <label for="name"
+            class="absolute text-sm  duration-300  transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            [ngClass]="{
+                'text-red-500 dark:text-red-400 peer-focus:text-red-600 peer-focus:dark:text-red-500': errors.email,
+                'text-gray-500 dark:text-gray-400 peer-focus:text-blue-600 peer-focus:dark:text-blue-500': !errors.email
+              }">Email address</label>
+        </div>
+
+        <div *ngIf="errors.email"
+          class="flex items-center text-xs text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert">
+          <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+          </svg>
+          <span class="sr-only">Info</span>
+          <div>
+            {{ errors.email[0] }}
           </div>
         </div>
 
         <div class="relative">
-          <input type="password" id="password" [(ngModel)]="password" name="password"
+          <input type="password" id="password" [(ngModel)]="password" name="password" (input)="clearError('password')"
             class="block px-2.5 pb-2.5 pt-4 text-gray-900 dark:text-white w-full text-sm bg-transparent rounded-lg border-1 appearance-none focus:outline-none focus:ring-0 peer"
-            (input)="clearError('password')" [ngClass]="{
+            [ngClass]="{
               'border-red-300 dark:border-red-600  dark:focus:border-red-500 focus:border-red-600': errors.password,
               'border-gray-300 dark:border-gray-600  dark:focus:border-blue-500 focus:border-blue-600': !errors.password
-            }" placeholder=" " />
-          <label for="password"
-            class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            }" placeholder=" " required />
+          <label for="name"
+            class="absolute text-sm  duration-300  transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
             [ngClass]="{
                 'text-red-500 dark:text-red-400 peer-focus:text-red-600 peer-focus:dark:text-red-500': errors.password,
                 'text-gray-500 dark:text-gray-400 peer-focus:text-blue-600 peer-focus:dark:text-blue-500': !errors.password
-              }">Password</label>
+              }">Create password</label>
         </div>
 
         <div *ngIf="errors.password"
@@ -108,16 +137,43 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-between">
-          <label class="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
-            <input type="checkbox"
-              class="h-4 w-4 rounded focus:ring-blue-600 focus:ring-3 border-gray-300 dark:bg-gray-700" />
-            Remember me
-          </label>
-          <button type="button" class="text-sm text-blue-600 hover:underline dark:text-blue-600">
-            Forgot password?
-          </button>
+        <div class="relative">
+          <input type="password" id="password_confirmation" [(ngModel)]="password_confirmation"
+            name="password_confirmation" (input)="clearError('password_confirmation')"
+            class="block px-2.5 pb-2.5 pt-4 text-gray-900 dark:text-white w-full text-sm bg-transparent rounded-lg border-1 appearance-none focus:outline-none focus:ring-0 peer"
+            [ngClass]="{
+              'border-red-300 dark:border-red-600  dark:focus:border-red-500 focus:border-red-600': errors.password_confirmation,
+              'border-gray-300 dark:border-gray-600  dark:focus:border-blue-500 focus:border-blue-600': !errors.password_confirmation
+            }" placeholder=" " required />
+          <label for="name"
+            class="absolute text-sm  duration-300  transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            [ngClass]="{
+                'text-red-500 dark:text-red-400 peer-focus:text-red-600 peer-focus:dark:text-red-500': errors.password_confirmation,
+                'text-gray-500 dark:text-gray-400 peer-focus:text-blue-600 peer-focus:dark:text-blue-500': !errors.password_confirmation
+              }">Confirm password</label>
+        </div>
 
+        <div *ngIf="errors.password_confirmation"
+          class="flex items-center text-xs text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert">
+          <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+          </svg>
+          <span class="sr-only">Info</span>
+          <div>
+            {{ errors.password_confirmation[0] }}
+          </div>
+        </div>
+
+
+        <div class="flex items-center justify-between">
+          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            By continuing, you agree to our
+            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Terms of Service</a> and <a href="#"
+              class="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>.
+          </p>
         </div>
 
         <div>
@@ -135,25 +191,11 @@
               </svg>
               <span class="sr-only">Loading...</span>
             </div>
-            <span *ngIf="!isLoading">Sign in</span>
-            <span *ngIf="isLoading">Signing in…</span>
+            <span *ngIf="!isLoading">Continue</span>
+            <span *ngIf="isLoading">Sending link to your email</span>
           </button>
         </div>
       </form>
-
-      <div *ngIf="errorMessage.message"
-        class="flex  text-center justify-center items-centers p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-        role="alert">
-        <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor" viewBox="0 0 20 20">
-          <path
-            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-        </svg>
-        <span class="sr-only">Info</span>
-        <div>
-          {{ errorMessage.message }}
-        </div>
-      </div>
 
       <!-- <div
         class="my-6 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300">
@@ -163,9 +205,8 @@
 
 
       <div class="mt-5 text-center text-sm text-gray-500 dark:text-gray-400">
-        Don’t have an account?
-        <a routerLink="/sign-up" class="text-blue-600 hover:underline dark:text-blue-600">Create
-          one</a>
+        Already have an account?
+        <a routerLink="/sign-in" class="text-blue-600 hover:underline dark:text-blue-600">Sign in</a>
       </div>
     </div>
   </div>
