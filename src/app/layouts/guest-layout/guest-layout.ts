@@ -4,7 +4,7 @@ import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-guest-layout',
-  imports: [Header, Footer],
+  imports: [Header],
   templateUrl: './guest-layout.html',
   styleUrl: './guest-layout.css'
 })

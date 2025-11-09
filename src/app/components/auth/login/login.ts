@@ -1,56 +1,77 @@
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
-import { ApiServices } from './../../../services/api-services';
-import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
-
+import { Title } from '@angular/platform-browser';
+import { ApiServices } from '../../../services/api-services';
+import { EyeClosed, Eye, LucideAngularModule } from 'lucide-angular';
+import { initTooltips } from 'flowbite';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, FormsModule, NgIf, NgClass, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    NgIf,
+    NgClass,
+    RouterLink,
+    LucideAngularModule
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login {
+export class Login implements OnInit {
 
-  usernameOrEmail: string = '';
-  password: string = '';
-  isLoading: boolean = false;
+  usernameOrEmail = '';
+  password = '';
+  isLoading = false;
   errors: any = {};
-  errorMessage: any = {}
+  errorMessage: any = {};
+  isPasswordShow: boolean = false;
+  year: number = new Date().getFullYear();
+  showTip: boolean = false;
 
-  constructor(private readonly apiServices: ApiServices) { }
+  readonly EyeClosed = EyeClosed;
+  readonly EyeOpen = Eye;
+
+  constructor(
+    private readonly apiServices: ApiServices,
+    private readonly title: Title
+  ) {
+    this.title.setTitle('StyleHub - Sign in');
+  }
 
   onLogin() {
     this.isLoading = true;
+
     this.apiServices.loginRequest({
       usernameOrEmail: this.usernameOrEmail,
       password: this.password
-    }).subscribe(
-      response => {
+    }).subscribe({
+      next: (response) => {
         this.isLoading = false;
-
         console.log('Full response:', response);
 
-        if (response.status === 'success') {
-          console.log(response.message)
-        } else {
-          console.log(response.message)
-        }
+        console.log(response.message);
       },
-      error => {
+      error: (error) => {
         this.isLoading = false;
         this.errors = error.error?.errors || {};
         this.errorMessage = error.error?.errors || {};
-        console.log(this.errorMessage)
       }
-    )
+    });
   }
 
   clearError(field: string) {
+    delete this.errors[field];
     this.errorMessage = {};
-    if (this.errors[field]) {
-      delete this.errors[field];
-    }
+  }
+
+  togglePassword() {
+    this.isPasswordShow = !this.isPasswordShow;
+  }
+
+  ngOnInit(): void {
+      initTooltips();
   }
 }

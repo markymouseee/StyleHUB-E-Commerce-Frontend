@@ -21,7 +21,12 @@ export class ApiServices {
   }
 
   registerUser(data: any): Observable<any> {
-    return this.http.post(this.apiUrl + 'register', data, {
+    return this.http.post(this.apiUrl + 'register', {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      password_confirmation: data.password_confirmation
+    }, {
       withCredentials: true
     })
   }

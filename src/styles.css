@@ -1,8 +1,10 @@
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import "flowbite/dist/flowbite.css";
+/*
+@import "flowbite/dist/flowbite.css"; */
 
 body {
   font-family: 'Poppins', sans-serif;

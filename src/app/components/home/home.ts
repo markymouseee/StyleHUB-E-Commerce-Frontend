@@ -1,7 +1,7 @@
-import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { GuestLayout } from '../../layouts/guest-layout/guest-layout';
 import { Card } from '../ui/card/card';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +11,10 @@ import { Card } from '../ui/card/card';
 })
 
 export class Home {
+
+  constructor(private title: Title){
+    this.title.setTitle('StyleHub - Clothing Shop')
+  }
    cards = [
     {
       title: 'Nmoder Casual Dresses for Women ',
