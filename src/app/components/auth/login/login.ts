@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
 import { Title } from '@angular/platform-browser';
 import { ApiServices } from '../../../services/api-services';
 import { EyeClosed, Eye, LucideAngularModule } from 'lucide-angular';
-import { initTooltips } from 'flowbite';
+import { initModals, initTooltips } from 'flowbite';
 
 @Component({
   selector: 'app-login',
@@ -50,14 +50,15 @@ export class Login implements OnInit {
     }).subscribe({
       next: (response) => {
         this.isLoading = false;
-        console.log('Full response:', response);
 
         console.log(response.message);
       },
       error: (error) => {
         this.isLoading = false;
         this.errors = error.error?.errors || {};
-        this.errorMessage = error.error?.errors || {};
+        this.errorMessage = error.error.message || {};
+
+        console.log(error) //Debugging
       }
     });
   }
@@ -72,6 +73,7 @@ export class Login implements OnInit {
   }
 
   ngOnInit(): void {
-      initTooltips();
+    initTooltips();
+    initModals();
   }
 }

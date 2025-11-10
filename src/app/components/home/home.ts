@@ -13,7 +13,7 @@ import { Title } from '@angular/platform-browser';
 export class Home {
 
   constructor(private title: Title){
-    this.title.setTitle('StyleHub - Clothing Shop')
+    this.title.setTitle('StyleHub - Clothing and Apparel Shop')
   }
    cards = [
     {

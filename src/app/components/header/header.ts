@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { OnInit, Component } from '@angular/core';
 import { LucideAngularModule, Moon, Search, ShoppingBag, User } from "lucide-angular";
 import { RouterLink } from "@angular/router";
 import { initCollapses } from 'flowbite';
@@ -9,13 +9,13 @@ import { initCollapses } from 'flowbite';
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header implements AfterViewInit {
+export class Header implements OnInit {
   readonly Search = Search;
   readonly User = User;
   readonly Moon = Moon;
   readonly ShoppingBag = ShoppingBag;
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     initCollapses();
   }
 }

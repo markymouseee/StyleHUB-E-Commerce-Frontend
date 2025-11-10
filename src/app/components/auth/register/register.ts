@@ -1,12 +1,11 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiServices } from '../../../services/api-services';
 import { RouterLink } from "@angular/router";
 import { Title } from '@angular/platform-browser';
 import { Eye, LucideAngularModule, EyeClosed } from 'lucide-angular';
-import { initTooltips } from 'flowbite';
-import { routes } from '../../../app.routes';
+import { initModals, initTooltips } from 'flowbite';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +13,7 @@ import { routes } from '../../../app.routes';
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
-export class Register implements OnInit {
+export class Register implements AfterViewInit {
 
   name: string = ''
   email: string = ''
@@ -63,7 +62,8 @@ export class Register implements OnInit {
     this.isShowPassword = !this.isShowPassword;
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     initTooltips();
+    initModals();
   }
 }
