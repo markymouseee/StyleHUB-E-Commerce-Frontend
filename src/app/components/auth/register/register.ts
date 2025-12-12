@@ -1,7 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ApiServices } from '../../../services/api-services';
+import { AuthServices } from '../../../services/auth-services';
 import { RouterLink } from "@angular/router";
 import { Title } from '@angular/platform-browser';
 import { Eye, LucideAngularModule, EyeClosed } from 'lucide-angular';
@@ -28,14 +28,14 @@ export class Register implements AfterViewInit {
   readonly Eye = Eye;
   readonly EyeClosed = EyeClosed;
 
-  constructor(private readonly apiServices: ApiServices, private title: Title) {
+  constructor(private readonly authServices: AuthServices, private title: Title) {
     this.title.setTitle('StyleHub - Sign up')
   }
 
   onRegister() {
     this.isLoading = true;
 
-    this.apiServices.registerUser({
+    this.authServices.registerUser({
       name: this.name,
       email: this.email,
       password: this.password,

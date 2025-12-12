@@ -3,7 +3,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
 import { Title } from '@angular/platform-browser';
-import { ApiServices } from '../../../services/api-services';
+import { AuthServices } from '../../../services/auth-services';
 import { EyeClosed, Eye, LucideAngularModule } from 'lucide-angular';
 import { initModals, initTooltips } from 'flowbite';
 
@@ -35,7 +35,7 @@ export class Login implements OnInit {
   readonly EyeOpen = Eye;
 
   constructor(
-    private readonly apiServices: ApiServices,
+    private readonly authServices: AuthServices,
     private readonly title: Title
   ) {
     this.title.setTitle('StyleHub - Sign in');
@@ -44,7 +44,7 @@ export class Login implements OnInit {
   onLogin() {
     this.isLoading = true;
 
-    this.apiServices.loginRequest({
+    this.authServices.loginRequest({
       usernameOrEmail: this.usernameOrEmail,
       password: this.password
     }).subscribe({
