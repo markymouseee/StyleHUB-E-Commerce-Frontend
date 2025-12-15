@@ -1,0 +1,82 @@
+<app-dashboard>
+  <!-- Stats -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-6">
+    <div class="metric-card bg-white dark:bg-slate-800 shadow rounded-lg p-4 w-full">
+      <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Total Orders</p>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white truncate">1,248</h2>
+      <span class="text-xs text-green-500 truncate">This month</span>
+    </div>
+    <div class="metric-card bg-white dark:bg-slate-800 shadow rounded-lg p-4 w-full">
+      <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Pending</p>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white truncate">112</h2>
+      <span class="text-xs text-yellow-500 truncate">Awaiting processing</span>
+    </div>
+    <div class="metric-card bg-white dark:bg-slate-800 shadow rounded-lg p-4 w-full">
+      <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Completed</p>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white truncate">980</h2>
+      <span class="text-xs text-green-500 truncate">Delivered</span>
+    </div>
+    <div class="metric-card bg-white dark:bg-slate-800 shadow rounded-lg p-4 w-full">
+      <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Cancelled</p>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-white truncate">56</h2>
+      <span class="text-xs text-red-500 truncate">Needs attention</span>
+    </div>
+  </section>
+
+  <!-- Orders Table -->
+  <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-x-auto">
+    <div class="px-4 sm:px-6 py-4 border-b dark:border-slate-700 flex justify-between items-center">
+      <h2 class="text-sm font-semibold text-slate-800 dark:text-white">Orders</h2>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md text-sm">Add Order</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm min-w-[350px] md:min-w-[600px] table-auto">
+        <thead class="bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+          <tr>
+            <th class="px-3 sm:px-6 py-3 text-left font-medium">Order #</th>
+            <th class="px-3 sm:px-6 py-3 text-left font-medium">Customer</th>
+            <th class="px-3 sm:px-6 py-3 text-left font-medium">Status</th>
+            <th class="px-3 sm:px-6 py-3 text-left font-medium">Amount</th>
+            <th class="px-3 sm:px-6 py-3 text-left font-medium">Date</th>
+            <th class="px-3 sm:px-6 py-3 text-right font-medium">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y dark:divide-slate-700">
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/40">
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4 font-medium truncate">#10234</td>
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4 truncate max-w-[120px]">Jane Doe</td>
+            <td class="px-3 sm:px-6 py-4">
+              <span
+                class="inline-block px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 dark:bg-green-800/30 rounded-full truncate">
+                Completed
+              </span>
+            </td>
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4">$320</td>
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4">2025-12-16</td>
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4 text-right">
+              <button class="text-blue-600 hover:underline mr-2">View</button>
+              <button class="text-red-600 hover:underline">Cancel</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/40">
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4 font-medium truncate">#10235</td>
+            <td class=" text-gray-800 dark:text-white px-3 sm:px-6 py-4 truncate max-w-[120px]">John Smith</td>
+            <td class="px-3 sm:px-6 py-4">
+              <span
+                class="inline-block px-2 py-1 text-xs font-semibold text-yellow-700 bg-yellow-100 dark:bg-yellow-800/30 rounded-full truncate">
+                Pending
+              </span>
+            </td>
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4">$150</td>
+            <td class="text-gray-800 dark:text-white px-3 sm:px-6 py-4">2025-12-15</td>
+            <td class="px-3 sm:px-6 py-4 text-right">
+              <button class="text-blue-600 hover:underline mr-2">View</button>
+              <button class="text-red-600 hover:underline">Cancel</button>
+            </td>
+          </tr>
+          <!-- Add more orders dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+</app-dashboard>

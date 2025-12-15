@@ -1,69 +1,86 @@
-import { Component } from '@angular/core';
-import { GuestLayout } from '../../layouts/guest-layout/guest-layout';
+import { AsyncPipe, NgIf, NgFor } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Card } from '../ui/card/card';
 import { Title } from '@angular/platform-browser';
+import { AuthServices } from '../../services/auth-services';
+import { Router, RouterLink } from '@angular/router';
+import { ProductServices } from '../../services/product-services';;
+import { LucideAngularModule, Menu, Moon, Search, ShoppingBag, ShoppingCart, User } from "lucide-angular";
 
 @Component({
   selector: 'app-home',
-  imports: [GuestLayout, Card],
+  imports: [Card, LucideAngularModule, NgIf, AsyncPipe, NgFor, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 
-export class Home {
+export class Home implements OnInit {
 
-  constructor(private title: Title){
+  constructor(private title: Title, private auth: AuthServices, private readonly router: Router, private readonly productServices: ProductServices) {
     this.title.setTitle('StyleHub - Clothing and Apparel Shop')
+    this.user$ = this.auth.user$;
   }
-   cards = [
-    {
-      title: 'Nmoder Casual Dresses for Women ',
-      imageUrl: 'https://m.media-amazon.com/images/I/61YC42LACYL._AC_UY1000_.jpg',
-      price: 29.99,
-      rating: 4.5
-    },
-    {
-      title: 'Casual Jacket',
-      imageUrl: 'https://m.media-amazon.com/images/I/61vB24KUtrL._AC_UY1000_.jpg',
-      price: 49.99,
-      rating: 4.0
-    },
-    {
-      title: "Men's Button Down Shirts",
-      imageUrl: 'https://m.media-amazon.com/images/I/31d+R37-JIL.jpg',
-      price: 25.99,
-      rating: 4.2
-    },
-    {
-      title: "Mens Tuxedo",
-      imageUrl: 'https://m.media-amazon.com/images/I/51PzVU-id0L._AC_SX569_.jpg',
-      price: 76.49,
-      rating: 3
-    },
-    {
-      title: "COOFANDY Men's Floral Tuxedo",
-      imageUrl: 'https://m.media-amazon.com/images/I/81-SidgvvtL._AC_SY550_.jpg',
-      price: 66.49,
-      rating: 5
-    },
-    {
-      title: "FaroLy Women's Casual 2 Piece Outfits",
-      imageUrl: 'https://m.media-amazon.com/images/I/51a8d4MKzzL._AC_SX569_.jpg',
-      price: 44.14,
-      rating: 4.5
-    },
-    {
-      title: "OUTFIT Men's Cotton",
-      imageUrl: "https://m.media-amazon.com/images/I/51-O-VCzDfL.jpg",
-      price: 39.99,
-      rating: 4.5
-    },
-    {
-      title: "NQyIOS Mens Spring and Summer",
-      imageUrl: "https://m.media-amazon.com/images/I/71hisBxSamL._AC_SX679_.jpg",
-      price: 99.99,
-      rating: 5
+
+  user: any = null;
+  isLoggedIn = false;
+  cards: any = {};
+  cartCount = 0;
+
+  onAddToCart(quantity: number) {
+    this.cartCount += quantity;
+  }
+
+
+  fetchProducts() {
+    this.productServices.fetchAll().subscribe({
+      next: (data: any) => {
+        this.cards = data;
+        console.log(data)
+      }
+    })
+  }
+
+  readonly Search = Search;
+  readonly User = User;
+  readonly Moon = Moon;
+  readonly ShoppingBag = ShoppingBag;
+  readonly ShoppingCart = ShoppingCart;
+  readonly Menu = Menu;
+
+  mobileMenuVisible = false;
+  user$;
+  logoutModalVisible = false;
+
+  toggleMobileMenu() {
+    this.mobileMenuVisible = !this.mobileMenuVisible;
+  }
+
+
+  showLogoutModal() {
+    this.logoutModalVisible = true;
+  }
+
+  closeModal() {
+    this.logoutModalVisible = false;
+  }
+
+  confirmLogout() {
+    this.auth.clearUser(); // your logout logic
+    this.router.navigate(['/auth/sign-in']);
+    this.closeModal();
+  }
+
+  ngOnInit(): void {
+    this.auth.user$.subscribe(user => {
+      this.user = user;
+      this.isLoggedIn = !!user;
+    });
+
+    this.fetchProducts();
+
+    if (this.user?.role === 'owner') {
+      this.router.navigate(['/admin/dashboard']);
     }
-  ];
+  }
 }
 

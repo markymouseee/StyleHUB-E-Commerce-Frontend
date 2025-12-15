@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { Title } from '@angular/platform-browser';
 import { AuthServices } from '../../../services/auth-services';
 import { EyeClosed, Eye, LucideAngularModule } from 'lucide-angular';
@@ -36,13 +36,23 @@ export class Login implements OnInit {
 
   constructor(
     private readonly authServices: AuthServices,
-    private readonly title: Title
+    private readonly title: Title,
+    private readonly router: Router
   ) {
     this.title.setTitle('StyleHub - Sign in');
+    const state = history.state;
+
+    if (state?.message) {
+      this.errorMessage.message = state.message;
+
+      history.replaceState({}, document.title);
+    }
+
   }
 
   onLogin() {
     this.isLoading = true;
+    this.errorMessage = {}
 
     this.authServices.loginRequest({
       usernameOrEmail: this.usernameOrEmail,
@@ -50,15 +60,16 @@ export class Login implements OnInit {
     }).subscribe({
       next: (response) => {
         this.isLoading = false;
-
-        console.log(response.message);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('token', response.data.token);
+        window.location.reload();
       },
       error: (error) => {
         this.isLoading = false;
         this.errors = error.error?.errors || {};
         this.errorMessage = error.error.message || {};
 
-        console.log(error) //Debugging
+        console.log(error)
       }
     });
   }

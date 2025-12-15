@@ -1,0 +1,112 @@
+<div class="min-h-screen flex flex-col md:flex-row bg-slate-50 dark:bg-slate-900">
+
+  <!-- Sidebar -->
+  <aside
+    class="fixed inset-y-0 left-0 z-50 w-64 transform bg-white dark:bg-gray-800 border-r border-slate-200 dark:border-slate-700 transition-transform duration-300 md:relative md:translate-x-0"
+    [class.-translate-x-full]="!sidebarOpen">
+
+    <!-- Logo -->
+    <div class="h-16 flex items-center px-4 md:px-6 border-b dark:border-slate-700">
+      <lucide-icon [img]="ShoppingBag" class="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2"></lucide-icon>
+      <span class="text-lg font-semibold text-slate-800 dark:text-white">StyleHub</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="px-4 py-6 space-y-2 text-sm">
+      <a routerLink="/admin/dashboard"
+        class="nav-item flex items-center gap-2 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/50 px-3 py-2 rounded w-full">
+        <lucide-icon [img]="Home" class="w-5 h-5"></lucide-icon> Dashboard
+      </a>
+      <a routerLink="/admin/products"
+        class="nav-item flex items-center gap-2 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/50 px-3 py-2 rounded w-full">
+        <lucide-icon [img]="Package" class="w-5 h-5"></lucide-icon> Products
+      </a>
+      <a routerLink="/admin/orders"
+        class="nav-item flex items-center gap-2 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/50 px-3 py-2 rounded w-full">
+        <lucide-icon [img]="ShoppingCart" class="w-5 h-5"></lucide-icon> Orders
+      </a>
+      <a
+        class="nav-item flex items-center gap-2 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/50 px-3 py-2 rounded w-full">
+        <lucide-icon [img]="Users" class="w-5 h-5"></lucide-icon> Customers
+      </a>
+      <a
+        class="nav-item flex items-center gap-2 font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/50 px-3 py-2 rounded w-full">
+        <lucide-icon [img]="BarChart2" class="w-5 h-5"></lucide-icon> Analytics
+      </a>
+    </nav>
+
+    <!-- Logout -->
+    <div class="absolute bottom-0 w-full px-4 py-4 border-t dark:border-slate-700">
+      <button (click)="showLogoutModal()"
+        class="w-full flex items-center gap-2 px-4 py-2 rounded-md text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10">
+        <lucide-icon [img]="LogOut" class="w-5 h-5"></lucide-icon> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div *ngIf="sidebarOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" (click)="sidebarOpen = false">
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col w-full transition-all duration-300">
+
+    <!-- Navbar -->
+    <header
+      class="h-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-4 md:px-6 w-full">
+      <div class="flex items-center gap-4">
+        <button class="md:hidden text-gray-700 dark:text-gray-300" (click)="toggleSidebar()">
+          <lucide-icon [img]="Menu" class="w-6 h-6"></lucide-icon>
+        </button>
+        <h1 class="text-lg font-semibold text-slate-800 dark:text-white truncate">Dashboard</h1>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="p-2 rounded-md  text-gray-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-slate-700" (click)="toggleDarkMode()">
+          <lucide-icon [img]="Moon" class="w-5 h-5"></lucide-icon>
+        </button>
+        <div class="text-sm text-slate-600 dark:text-slate-300 truncate max-w-[120px]">{{ user.name }}</div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="p-4 sm:p-6 w-full max-w-full space-y-6">
+     <ng-content></ng-content>
+    </main>
+  </div>
+</div>
+
+<div *ngIf="logoutModalVisible" id="popup-modal" tabindex="-1"
+  class="overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 transition-opacity">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div
+      class="relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6">
+      <button type="button"
+        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:hover:text-white rounded-full w-9 h-9 flex justify-center items-center"
+        (click)="closeModal()">
+        ✕
+      </button>
+
+      <div class="text-center p-4 md:p-5">
+        <svg class="mx-auto mb-4 w-12 h-12 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <h3 class="mb-6 text-lg font-medium text-gray-800 dark:text-gray-100">Are you sure you want to log out?</h3>
+
+        <div class="flex items-center justify-center gap-4">
+          <button type="button"
+            class="text-white bg-red-600 hover:bg-red-700 rounded-lg px-5 py-2 font-medium transition"
+            (click)="confirmLogout()">
+            Yes, log me out
+          </button>
+          <button type="button"
+            class="text-gray-800 dark:text-gray-100 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg px-5 py-2 font-medium transition"
+            (click)="closeModal()">
+            No, cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

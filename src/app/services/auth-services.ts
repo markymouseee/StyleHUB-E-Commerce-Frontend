@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -11,6 +11,38 @@ export class AuthServices {
   private api = environment.apiUrl;
 
   constructor(private readonly http: HttpClient) { }
+
+
+  private userSubject = new BehaviorSubject<any>(this.loadUser());
+  user$ = this.userSubject.asObservable();
+
+  private loadUser() {
+    try {
+      const user = localStorage.getItem('user');
+      return user ? JSON.parse(user) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  setUser(user: any) {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
+
+  clearUser() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.userSubject.next(null);
+  }
+
+  getCurrentUser() {
+    return this.userSubject.value;
+  }
+
+  isLoggedIn() {
+    return !!this.userSubject.value;
+  }
 
   loginRequest(data: any): Observable<any> {
     return this.http.post(this.api + 'login', {
