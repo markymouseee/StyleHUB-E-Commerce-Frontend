@@ -59,6 +59,13 @@ export class Card {
             this.router.navigate(['/auth/sign-in']);
           }
         })
+      },
+      error: (err: any) => {
+        Swal.fire({
+          theme: 'auto',
+          icon: 'error',
+          text: err.error?.message
+        })
       }
     });
 

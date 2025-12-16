@@ -2,17 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { CartServices } from '../../../services/cart-services';
 import { NgFor, NgIf } from '@angular/common';
 import { LucideAngularModule, X, Trash } from 'lucide-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart-drawer',
   standalone: true,
-  imports: [NgFor, NgIf, LucideAngularModule],
+  imports: [NgFor, NgIf, LucideAngularModule, ReactiveFormsModule, FormsModule],
   templateUrl: './cart-drawer.html',
   styleUrls: ['./cart-drawer.css']
 })
 export class CartDrawerComponent implements OnInit {
   isOpen = false;
   cartItems: any[] = [];
+  user = JSON.parse(localStorage.getItem('user')!);
+  address: string = '';
 
   readonly Exit = X;
   readonly Trash = Trash;
@@ -59,7 +63,6 @@ export class CartDrawerComponent implements OnInit {
 
     this.cartServices.updateQuantity(product.id, newQuantity).subscribe({
       next: () => {
-        // Update quantity locally
         product.quantity = newQuantity;
       },
       error: (err) => console.error('Decrement error', err)
@@ -70,11 +73,31 @@ export class CartDrawerComponent implements OnInit {
     this.cartServices.removeItem(product.id).subscribe({
       next: (res) => {
         console.log('Remove response', res);
-        // Remove from local cart
         this.cartItems = this.cartItems.filter(p => p.id !== product.id);
       },
       error: (err) => console.error('Remove error', err)
     });
+  }
+
+  OnCheckOut(){
+    this.cartServices.checkOut({
+      address: this.address
+    }).subscribe({
+      next: (res: any) => {
+        Swal.fire({
+          theme: 'auto',
+          icon: 'success',
+          text: 'Successfully checkout'
+        }).then((willdirect: any) => {
+          if(willdirect.isConfirmed){
+            window.location.reload();
+          }
+        })
+      },
+      error: (err: any) => {
+        console.log(err)
+      }
+    })
   }
 
 

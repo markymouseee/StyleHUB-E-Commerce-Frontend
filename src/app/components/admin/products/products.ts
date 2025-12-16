@@ -108,7 +108,15 @@ export class Products implements AfterViewInit {
     }
     this.productServices.addProduct(formData).subscribe({
       next: (res) => {
-
+        Swal.fire({
+          theme: 'auto',
+          icon: 'success',
+          text: 'Product added Successfully'
+        }).then((willdiect: any) => {
+          if(willdiect.isConfirmed){
+            window.location.reload();
+          }
+        })
       },
       error: (err) => {
         console.log(err)

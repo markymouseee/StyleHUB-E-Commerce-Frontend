@@ -56,7 +56,20 @@ export class CartServices {
     });
   }
 
-
+  checkOut(data: any): Observable<any> {
+    const userRaw = JSON.parse(localStorage.getItem('user')!);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    })
+    return this.http.post(`${this.api}cart/checkout`, {
+      user_id: userRaw.id,
+      address: data.address
+    }, {
+      headers: headers,
+      withCredentials: true
+    })
+  }
 
   getCount(): Observable<any> {
     const token = localStorage.getItem('token');
