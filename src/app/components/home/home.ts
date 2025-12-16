@@ -1,3 +1,4 @@
+import { CartServices } from './../../services/cart-services';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Card } from '../ui/card/card';
@@ -6,17 +7,18 @@ import { AuthServices } from '../../services/auth-services';
 import { Router, RouterLink } from '@angular/router';
 import { ProductServices } from '../../services/product-services';;
 import { LucideAngularModule, Menu, Moon, Search, ShoppingBag, ShoppingCart, User } from "lucide-angular";
+import { CartDrawerComponent } from '../ui/cart-drawer/cart-drawer';
 
 @Component({
   selector: 'app-home',
-  imports: [Card, LucideAngularModule, NgIf, AsyncPipe, NgFor, RouterLink],
+  imports: [Card, LucideAngularModule, NgIf, AsyncPipe, NgFor, RouterLink, CartDrawerComponent],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 
 export class Home implements OnInit {
 
-  constructor(private title: Title, private auth: AuthServices, private readonly router: Router, private readonly productServices: ProductServices) {
+  constructor(private readonly cartServices: CartServices, private title: Title, private auth: AuthServices, private readonly router: Router, private readonly productServices: ProductServices) {
     this.title.setTitle('StyleHub - Clothing and Apparel Shop')
     this.user$ = this.auth.user$;
   }
@@ -36,6 +38,14 @@ export class Home implements OnInit {
       next: (data: any) => {
         this.cards = data;
         console.log(data)
+      }
+    })
+  }
+
+  getCountCart() {
+    this.cartServices.getCount().subscribe({
+      next: (data: any) => {
+        this.cartCount = data;
       }
     })
   }
@@ -77,6 +87,7 @@ export class Home implements OnInit {
     });
 
     this.fetchProducts();
+    this.getCountCart();
 
     if (this.user?.role === 'owner') {
       this.router.navigate(['/admin/dashboard']);
